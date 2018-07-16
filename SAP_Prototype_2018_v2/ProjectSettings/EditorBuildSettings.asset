@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GoogleARCore/Examples/CloudAnchor/Scenes/CloudAnchor.unity
-    guid: 83fb41cc294e74bdea57537befa00ffc
+    path: Assets/Scenes/MainMenu.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/TopTrumps.unity
+    guid: e6a6fa04348cb45c9b0221eb19c946da
+  - enabled: 1
+    path: Assets/Scenes/Drills.unity
+    guid: c4ed352e4535a044eb9acfaee43a4633
   m_configObjects: {}
