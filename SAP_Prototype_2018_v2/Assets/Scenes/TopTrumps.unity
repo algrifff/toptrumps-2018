@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 43810837}
   - component: {fileID: 43810836}
   m_Layer: 5
-  m_Name: Text
+  m_Name: p_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.8999605, y: 0.000018129254}
+  m_AnchoredPosition: {x: 10.899963, y: 0.000018119812}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43810836
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 90531391}
   - component: {fileID: 90531390}
   m_Layer: 5
-  m_Name: Text
+  m_Name: dr_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.8999605, y: -0.000018129254}
+  m_AnchoredPosition: {x: 10.899963, y: -0.000018119812}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90531390
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 150980507}
   - component: {fileID: 150980506}
   m_Layer: 5
-  m_Name: Text
+  m_Name: d_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,7 +578,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 182181895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnDribblingClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &182181895
@@ -699,7 +710,7 @@ GameObject:
   - component: {fileID: 308852254}
   - component: {fileID: 308852253}
   m_Layer: 5
-  m_Name: Text
+  m_Name: s_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1611,6 +1622,18 @@ MonoBehaviour:
   defendingIntText: {fileID: 560185720}
   passingIntText: {fileID: 1270322405}
   strengthIntText: {fileID: 1243829099}
+  paceButtonText: {fileID: 0}
+  dribblingButtonText: {fileID: 0}
+  shootingButtonText: {fileID: 0}
+  defendingButtonText: {fileID: 0}
+  passingButtonText: {fileID: 0}
+  strengthButtonText: {fileID: 0}
+  paceButtonStatText: {fileID: 0}
+  dribblingButtonStatText: {fileID: 0}
+  shootingButtonStatText: {fileID: 0}
+  defendingButtonStatText: {fileID: 0}
+  passingButtonStatText: {fileID: 0}
+  strengthButtonStatText: {fileID: 0}
 --- !u!4 &617245801
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,7 +1681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50.999985, y: 0.000018129254}
+  m_AnchoredPosition: {x: 50.999985, y: 0.000018119812}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &618656147
@@ -2167,7 +2190,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 956162680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnShootingClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &956162680
@@ -3196,7 +3230,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1308287672}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnPaceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1308287672
@@ -3422,7 +3467,7 @@ GameObject:
   - component: {fileID: 1321746230}
   - component: {fileID: 1321746229}
   m_Layer: 5
-  m_Name: Text
+  m_Name: sh_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3899,7 +3944,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1427322423}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnPassingClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1427322423
@@ -4464,6 +4520,18 @@ MonoBehaviour:
   defendingIntText: {fileID: 2054804608}
   passingIntText: {fileID: 1637432187}
   strengthIntText: {fileID: 1372499817}
+  paceButtonText: {fileID: 1660959857}
+  dribblingButtonText: {fileID: 90531390}
+  shootingButtonText: {fileID: 1321746229}
+  defendingButtonText: {fileID: 150980506}
+  passingButtonText: {fileID: 43810836}
+  strengthButtonText: {fileID: 308852253}
+  paceButtonStatText: {fileID: 1575109986}
+  dribblingButtonStatText: {fileID: 2095601295}
+  shootingButtonStatText: {fileID: 585851897}
+  defendingButtonStatText: {fileID: 1408755472}
+  passingButtonStatText: {fileID: 618656147}
+  strengthButtonStatText: {fileID: 752959642}
 --- !u!4 &1599900242
 Transform:
   m_ObjectHideFlags: 0
@@ -4807,7 +4875,7 @@ GameObject:
   - component: {fileID: 1660959858}
   - component: {fileID: 1660959857}
   m_Layer: 5
-  m_Name: Text
+  m_Name: pc_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5626,7 +5694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000010608508}
+  m_AnchoredPosition: {x: 0, y: 0.0000104904175}
   m_SizeDelta: {x: 65.71002, y: 17.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1816714151
@@ -5744,7 +5812,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1854229128}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnDefendingClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1854229128
@@ -6154,7 +6233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50.999985, y: -0.000018129254}
+  m_AnchoredPosition: {x: 50.999985, y: -0.000018119812}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2095601295
@@ -6305,7 +6384,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2137993636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519765495}
+        m_MethodName: OnStrengthClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2137993636
