@@ -57,6 +57,7 @@ namespace GoogleARCore.Examples.HelloAR
         public GameObject SearchingForPlaneUI;
 
 		public GameObject readyButton;
+		public GameObject gameBoard;
 
         /// <summary>
         /// The rotation in degrees need to apply to model when the Andy model is placed.
@@ -126,13 +127,20 @@ namespace GoogleARCore.Examples.HelloAR
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
                     andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-
+					
                     // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                     // world evolves.
                     var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
                     // Make Andy model a child of the anchor.
                     andyObject.transform.parent = anchor.transform;
+
+					gameBoard.transform.parent = anchor.transform;
+					gameBoard.transform.localPosition = Vector3.zero;
+					gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+					gameBoard.SetActive(true);
+
+					DetectedPlanePrefab.SetActive(false);
 
 					canPlaceLevel = false;
 					SearchingForPlaneUI.SetActive(false);
