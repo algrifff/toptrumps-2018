@@ -19,7 +19,7 @@ public class ButtonManager : MonoBehaviour {
 	private GameObject home;
 
 	public delegate void SceneChange(string sceneName);
-	public event SceneChange NewScene;
+	public static event SceneChange NewScene;
 	
 	private void Start()
 	{

@@ -24,6 +24,7 @@ namespace GoogleARCore.Examples.HelloAR
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+	using UnityEngine.UI;
 
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
@@ -55,6 +56,8 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public GameObject SearchingForPlaneUI;
 
+		public GameObject readyButton;
+
         /// <summary>
         /// The rotation in degrees need to apply to model when the Andy model is placed.
         /// </summary>
@@ -70,6 +73,8 @@ namespace GoogleARCore.Examples.HelloAR
         /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
         /// </summary>
         private bool m_IsQuitting = false;
+
+		private bool canPlaceLevel = true;
 
         /// <summary>
         /// The Unity Update() method.
@@ -114,7 +119,7 @@ namespace GoogleARCore.Examples.HelloAR
                 {
                     Debug.Log("Hit at back of the current DetectedPlane");
                 }
-                else
+                else if(canPlaceLevel == true)
                 {
                     // Instantiate Andy model at the hit pose.
                     var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
@@ -128,6 +133,10 @@ namespace GoogleARCore.Examples.HelloAR
 
                     // Make Andy model a child of the anchor.
                     andyObject.transform.parent = anchor.transform;
+
+					canPlaceLevel = false;
+					SearchingForPlaneUI.SetActive(false);
+					readyButton.SetActive(true);
                 }
             }
         }
