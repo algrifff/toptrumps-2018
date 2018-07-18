@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+	#region Publics
+	[SerializeField]
+	private GameObject player1TextObject;
 
 	[Header("Starting objects")]
 	[SerializeField]
@@ -51,64 +54,51 @@ public class GameManager : MonoBehaviour {
 	private GameObject passingButton;
 	[SerializeField]
 	private GameObject strengthButton;
-
+	#endregion
 
 	private List<int> Player2Stats = new List<int>();
+	private bool player1Win;
+	private bool player2Win;
 
+
+	//events
 	public delegate void Player1Card(Card card);
 	public static event Player1Card SendCard;
+	public delegate void Player2Card(Card card);
+	public static event Player2Card SendCard2;
 
-	private int player1Comparison;
-	private int player2Comparison;
-	private bool player1Win = true;
-	private bool player2Win = false;
-
-	// Use this for initialization
+	
 	void Start ()
 	{
-		readyButton.SetActive(false);
-		buttonCanvas.SetActive(false);
+		//readyButton.SetActive(false);
+		//buttonCanvas.SetActive(false);
+		//player1TextObject.SetActive(false);
 		rotateLeftButton.SetActive(false);
 		rotateRightButton.SetActive(false);
 		rotateController.enabled = true;
+		player1Win = true;
+		player2Win = false;
 		
 	}
-
-	public void OnReadyClicked()
+	IEnumerator RoundStart()
 	{
-		rotateController.enabled = false;
-
-		//on button click start game shuffling
-		for (int i = 0; i < ManCity.Count; i++)
-		{
-			Card temp = ManCity[i];
-			int randomIndex = Random.Range(i, ManCity.Count);
-			ManCity[i] = ManCity[randomIndex];
-			ManCity[randomIndex] = temp;
-		}
-		for(int i = 0; i < ManCity.Count/2; i++)
-		{
-			Player1.Add(ManCity[i]);
-		}
-		for (int i = ManCity.Count / 2; i < ManCity.Count; i++)
-		{
-			Player2.Add(ManCity[i]);
-		}
-
-		readyButton.SetActive(false);
-		rotateLeftButton.SetActive(false);
-		rotateRightButton.SetActive(false);
-		buttonCanvas.SetActive(true);
-
 		UpdateScore();
+		UpdateCards();
+		//round 1 visual cue
 
-		SendToPlayer1();
+
+
+		// do this last
+		buttonCanvas.SetActive(true);
+		return null;
 	}
+	
 
-	void SendToPlayer1()
+	void UpdateCards()
 	{
 		SendCard(Player1[0]);
-		if(!player1Win)
+		SendCard2(Player2[0]);
+		if(player1Win == false)
 		{
 			buttonCanvas.SetActive(false);
 			Player2Turn(); 
@@ -119,6 +109,66 @@ public class GameManager : MonoBehaviour {
 		}
 		
 	}
+	
+
+	void UpdateScore()
+	{
+		player1Score = Player1.Count;
+		player2Score = Player2.Count;
+		player1ScoreText.text = "" + player1Score;
+		player2ScoreText.text = "" + player2Score;
+	}
+
+	void Comparison(int player1Comparison, int player2Comparison)
+	{
+		if (player1Comparison > player2Comparison)
+		{
+			Card oldCard = Player1[0];
+
+			Player1.Add(Player2[0]);
+			Player1.Remove(Player1[0]);
+			Player1.Add(oldCard);
+			Player2.Remove(Player2[0]);
+			player1Win = true;
+			player2Win = false;
+			UpdateCards();
+
+			UpdateScore();
+		}
+		else if (player2Comparison > player1Comparison)
+		{
+			Card oldCard = Player2[0];
+
+			Player2.Add(Player1[0]);
+			Player2.Remove(Player2[0]);
+			Player2.Add(oldCard);
+			Player1.Remove(Player1[0]);
+			player1Win = false;
+			player2Win = true;
+			UpdateCards();
+
+			UpdateScore();
+		}
+		else if (player1Comparison == player2Comparison)
+		{
+			Card oldCard1 = Player1[0];
+			Card oldCard2 = Player2[0];
+
+			Player1.Remove(Player1[0]);
+			Player2.Remove(Player2[0]);
+			Player1.Add(oldCard1);
+			Player2.Add(oldCard2);
+
+			UpdateCards();
+
+			UpdateScore();
+		}
+		else
+		{
+			return;
+		}
+	}
+	#region Player 2 Control
 	void Player2Turn()
 	{
 		Player2Stats.Add(Player2[0].pace);
@@ -128,10 +178,10 @@ public class GameManager : MonoBehaviour {
 		Player2Stats.Add(Player2[0].passing);
 		Player2Stats.Add(Player2[0].strength);
 
-		int statSelected = Player2Stats[Random.Range(0,Player2Stats.Count)];
+		int statSelected = Player2Stats[Random.Range(0, Player2Stats.Count)];
 
 		//pace stat selected
-		if(statSelected == Player2Stats[0])
+		if (statSelected == Player2Stats[0])
 		{
 			OnPaceClick();
 		}
@@ -160,104 +210,70 @@ public class GameManager : MonoBehaviour {
 		{
 			OnStrengthClick();
 		}
-		
-		for(int i = 0; i < Player2Stats.Count; i++)
+
+		for (int i = 0; i < Player2Stats.Count; i++)
 		{
 			Player2Stats.Remove(Player2Stats[i]);
 		}
 
 	}
-	void UpdateScore()
-	{
-		player1Score = Player1.Count;
-		player2Score = Player2.Count;
-		player1ScoreText.text = "" + player1Score;
-		player2ScoreText.text = "" + player2Score;
-	}
-
-	void Comparison()
-	{
-		if (player1Comparison > player2Comparison)
-		{
-			Card oldCard = Player1[0];
-
-			Player1.Add(Player2[0]);
-			Player1.Remove(Player1[0]);
-			Player1.Add(oldCard);
-			Player2.Remove(Player2[0]);
-			SendToPlayer1();
-
-			UpdateScore();
-		}
-		else if (player2Comparison > player1Comparison)
-		{
-			Card oldCard = Player2[0];
-
-			Player2.Add(Player1[0]);
-			Player2.Remove(Player2[0]);
-			Player2.Add(oldCard);
-			Player1.Remove(Player1[0]);
-			SendToPlayer1();
-
-			UpdateScore();
-		}
-		else if (player1Comparison == player2Comparison)
-		{
-			Card oldCard1 = Player1[0];
-			Card oldCard2 = Player2[0];
-
-			Player1.Remove(Player1[0]);
-			Player2.Remove(Player2[0]);
-			Player1.Add(oldCard1);
-			Player2.Add(oldCard2);
-
-			UpdateScore();
-		}
-	}
+	#endregion
 
 	#region Button Interactions
+
+	public void OnReadyClicked()
+	{
+		
+		//on button click start game shuffling
+		for (int i = 0; i < ManCity.Count; i++)
+		{
+			Card temp = ManCity[i];
+			int randomIndex = Random.Range(i, ManCity.Count);
+			ManCity[i] = ManCity[randomIndex];
+			ManCity[randomIndex] = temp;
+		}
+		for (int i = 0; i < ManCity.Count / 2; i++)
+		{
+			Player1.Add(ManCity[i]);
+		}
+		for (int i = ManCity.Count / 2; i < ManCity.Count; i++)
+		{
+			Player2.Add(ManCity[i]);
+		}
+
+		readyButton.SetActive(false);
+		rotateLeftButton.SetActive(false);
+		rotateRightButton.SetActive(false);
+		
+		rotateController.enabled = false;
+
+		StartCoroutine(RoundStart());
+	}
+
 	//button interactions
 	public void OnPaceClick()
 	{
-		player1Comparison = Player1[0].pace;
-		player2Comparison = Player2[0].pace;
-
-		Comparison();
+		Comparison(Player1[0].pace, Player2[0].pace);
 	}
 	public void OnDribblingClick()
 	{
-		player1Comparison = Player1[0].dribbling;
-		player2Comparison = Player2[0].dribbling;
-
-		Comparison();
+		Comparison(Player1[0].dribbling, Player2[0].dribbling);
 	}
 	public void OnShootingClick()
 	{
-		player1Comparison = Player1[0].shooting;
-		player2Comparison = Player2[0].shooting;
-
-		Comparison();
+		Comparison(Player1[0].shooting, Player2[0].shooting);
 	}
 	public void OnDefendingClick()
 	{
-		player1Comparison = Player1[0].defending;
-		player2Comparison = Player2[0].defending;
-
-		Comparison();
+		Comparison(Player1[0].defending, Player2[0].defending);
 	}
 	public void OnPassingClick()
 	{
-		player1Comparison = Player1[0].passing;
-		player2Comparison = Player2[0].passing;
-
-		Comparison();
+		Comparison(Player1[0].passing, Player2[0].passing);
 	}
 	public void OnStrengthClick()
 	{
-		player1Comparison = Player1[0].strength;
-		player2Comparison = Player2[0].strength;
-
-		Comparison();
+		Comparison(Player1[0].strength, Player2[0].strength);
 	}
 	#endregion
 }
