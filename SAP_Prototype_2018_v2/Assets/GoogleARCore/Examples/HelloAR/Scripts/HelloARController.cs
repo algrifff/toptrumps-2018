@@ -58,11 +58,15 @@ namespace GoogleARCore.Examples.HelloAR
 
 		public GameObject readyButton;
 		public GameObject gameBoard;
+		[SerializeField]
+		private GameObject rotateRightButton;
+		[SerializeField]
+		private GameObject rotateLeftButton;
 
-        /// <summary>
-        /// The rotation in degrees need to apply to model when the Andy model is placed.
-        /// </summary>
-        private const float k_ModelRotation = 180.0f;
+		/// <summary>
+		/// The rotation in degrees need to apply to model when the Andy model is placed.
+		/// </summary>
+		private const float k_ModelRotation = 180.0f;
 
         /// <summary>
         /// A list to hold all planes ARCore is tracking in the current frame. This object is used across
@@ -145,7 +149,9 @@ namespace GoogleARCore.Examples.HelloAR
 					canPlaceLevel = false;
 					SearchingForPlaneUI.SetActive(false);
 					readyButton.SetActive(true);
-                }
+					rotateLeftButton.SetActive(true);
+					rotateRightButton.SetActive(true);
+				}
             }
         }
 

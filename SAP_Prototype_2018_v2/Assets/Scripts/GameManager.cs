@@ -5,6 +5,17 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+
+	[Header("Starting objects")]
+	[SerializeField]
+	private RotateController rotateController;
+	[SerializeField]
+	private GameObject readyButton;
+	[SerializeField]
+	private GameObject rotateRightButton;
+	[SerializeField]
+	private GameObject rotateLeftButton;
+
 	[Header("Score Fields")]
 	[SerializeField]
 	private int player1Score;
@@ -14,9 +25,6 @@ public class GameManager : MonoBehaviour {
 	private Text player1ScoreText;
 	[SerializeField]
 	private Text player2ScoreText;
-
-	[SerializeField]
-	private GameObject readyButton;
 
 	[Header("Team being used")]
 	[SerializeField]
@@ -45,22 +53,31 @@ public class GameManager : MonoBehaviour {
 	private GameObject strengthButton;
 
 
+	private List<int> Player2Stats = new List<int>();
+
 	public delegate void Player1Card(Card card);
 	public static event Player1Card SendCard;
 
 	private int player1Comparison;
 	private int player2Comparison;
+	private bool player1Win = true;
+	private bool player2Win = false;
 
 	// Use this for initialization
 	void Start ()
 	{
 		readyButton.SetActive(false);
 		buttonCanvas.SetActive(false);
+		rotateLeftButton.SetActive(false);
+		rotateRightButton.SetActive(false);
+		rotateController.enabled = true;
 		
 	}
 
 	public void OnReadyClicked()
 	{
+		rotateController.enabled = false;
+
 		//on button click start game shuffling
 		for (int i = 0; i < ManCity.Count; i++)
 		{
@@ -79,23 +96,77 @@ public class GameManager : MonoBehaviour {
 		}
 
 		readyButton.SetActive(false);
+		rotateLeftButton.SetActive(false);
+		rotateRightButton.SetActive(false);
 		buttonCanvas.SetActive(true);
 
 		UpdateScore();
 
 		SendToPlayer1();
-		SendToPlayer2();
 	}
 
 	void SendToPlayer1()
 	{
 		SendCard(Player1[0]);
-	}
-	void SendToPlayer2()
-	{
+		if(!player1Win)
+		{
+			buttonCanvas.SetActive(false);
+			Player2Turn(); 
+		}
+		else 
+		{
+			buttonCanvas.SetActive(true);
+		}
 		
 	}
+	void Player2Turn()
+	{
+		Player2Stats.Add(Player2[0].pace);
+		Player2Stats.Add(Player2[0].dribbling);
+		Player2Stats.Add(Player2[0].shooting);
+		Player2Stats.Add(Player2[0].defending);
+		Player2Stats.Add(Player2[0].passing);
+		Player2Stats.Add(Player2[0].strength);
 
+		int statSelected = Player2Stats[Random.Range(0,Player2Stats.Count)];
+
+		//pace stat selected
+		if(statSelected == Player2Stats[0])
+		{
+			OnPaceClick();
+		}
+		//dribbling stat selected
+		if (statSelected == Player2Stats[1])
+		{
+			OnDribblingClick();
+		}
+		//shooting stat selected
+		if (statSelected == Player2Stats[2])
+		{
+			OnShootingClick();
+		}
+		//defending stat selected
+		if (statSelected == Player2Stats[3])
+		{
+			OnDefendingClick();
+		}
+		//passing stat selected
+		if (statSelected == Player2Stats[4])
+		{
+			OnPassingClick();
+		}
+		//strength stat selected
+		if (statSelected == Player2Stats[5])
+		{
+			OnStrengthClick();
+		}
+		
+		for(int i = 0; i < Player2Stats.Count; i++)
+		{
+			Player2Stats.Remove(Player2Stats[i]);
+		}
+
+	}
 	void UpdateScore()
 	{
 		player1Score = Player1.Count;
