@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 133e83fa76b655342a5b13102a757f1e
+guid: 133d18868b208b2429f8e0d8e254da7f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,11 +8,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Segoe UI
+  fontName: BentonSans
   fontNames:
-  - Segoe UI
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 041d5fe39c68d994d8097e474827595b, type: 3}
+  - BentonSans
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

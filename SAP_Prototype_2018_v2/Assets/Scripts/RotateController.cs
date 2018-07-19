@@ -18,13 +18,13 @@ public class RotateController : MonoBehaviour {
 		if(rotateRightActive == true && rotateLeftActive == false)
 		{
 			
-			gameBoard.transform.Rotate(new Vector3(0, rotation * Time.deltaTime, 0), Space.Self);
+			gameBoard.transform.Rotate(new Vector3(0, -rotation * Time.deltaTime, 0), Space.Self);
 			//rotate object positively
 		}
 		if (rotateLeftActive == true && rotateRightActive == false)
 		{
 			
-			gameBoard.transform.Rotate(new Vector3(0, -rotation * Time.deltaTime, 0), Space.Self);
+			gameBoard.transform.Rotate(new Vector3(0, rotation * Time.deltaTime, 0), Space.Self);
 			//rotate object negatively
 		}
 		if (rotateLeftActive == true && rotateRightActive == true)

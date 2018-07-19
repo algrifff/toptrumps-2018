@@ -10,10 +10,12 @@ public class SceneController : MonoBehaviour {
 	private void OnEnable()
 	{
 		ButtonManager.NewScene += LoadScene;
+		PauseManager.MainMenuClicked += LoadScene;
 	}
 	private void OnDisable()
 	{
 		ButtonManager.NewScene -= LoadScene;
+		PauseManager.MainMenuClicked -= LoadScene;
 	}
 	void Start()
 	{

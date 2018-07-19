@@ -113,9 +113,10 @@ public class GameManager : MonoBehaviour {
 	private GameObject strengthButton;
 	#endregion
 
-	private List<int> Player2Stats = new List<int>();
+	public List<int> Player2Stats;
 	private bool player1Win;
 	private bool player2Win;
+	private bool draw;
 
 
 	//events
@@ -139,11 +140,13 @@ public class GameManager : MonoBehaviour {
 	}
 	IEnumerator RoundStart()
 	{
+		p2CardCover.SetActive(true);
 		SendCard(Player1[0]);
 		SendCard2(Player2[0]);
 		UpdateScore();
 		roundNum = roundNum + 1;
 		//player1 turn start
+
 		if(player1Win == true)
 		{
 			roundNumberText.text = "ROUND " + roundNum;
@@ -167,12 +170,10 @@ public class GameManager : MonoBehaviour {
 			buttonCanvas.SetActive(false);
 			yield return new WaitForSeconds(1);
 			roundUi.SetActive(false);
-
 			yield return new WaitForSeconds(4);
-
 			Player2Turn();
 		}
-
+		
 		yield return null;
 	}
 	
@@ -181,35 +182,40 @@ public class GameManager : MonoBehaviour {
 		p2CardCover.SetActive(false);
 		yield return new WaitForSeconds(2);
 		comparisonUI.SetActive(true);
-		if (player1Win == true)
+
+		if(draw == false)
 		{
-			winLoseMainText.text = "PLAYER 1";
-			winsText.SetActive(true);
-			winLoseObject.SetActive(true);
+			if (player1Win == true)
+			{
+				winLoseMainText.text = "PLAYER 1";
+				winsText.SetActive(true);
+				winLoseObject.SetActive(true);
+			}
+			else if (player1Win == false)
+			{
+				winLoseMainText.text = "PLAYER 2";
+				winsText.SetActive(true);
+				winLoseObject.SetActive(true);
+			}
 		}
-		else if(player1Win == false)
+		else if(draw == false)
 		{
-			winLoseMainText.text = "PLAYER 2";
-			winsText.SetActive(true);
+			winLoseMainText.text = "DRAW!";
+			
 			winLoseObject.SetActive(true);
-			
-			
 		}
 		yield return new WaitForSeconds(4);
 		winsText.SetActive(false);
 		winLoseObject.SetActive(false);
 		comparisonUI.SetActive(false);
+		draw = false;
 		//when comparison is complete
 		//update score
 		//update cards
 		//reset player 2 so you cant see them
 		//the start rouns start
 		UpdateScore();
-
-
 		StartCoroutine(RoundStart());
-
-
 		yield return null;
 	}
 
@@ -226,7 +232,7 @@ public class GameManager : MonoBehaviour {
 		comparisonP1Stat.text = "" + player1Comparison;
 		comparisonP2Stat.text = "" + player2Comparison;
 		comparisonStatName.text = comparisonName;
-
+		buttonCanvas.SetActive(false);
 		if (player1Comparison > player2Comparison)
 		{
 			Card oldCard = Player1[0];
@@ -262,7 +268,7 @@ public class GameManager : MonoBehaviour {
 			Player2.Remove(Player2[0]);
 			Player1.Add(oldCard1);
 			Player2.Add(oldCard2);
-
+			draw = true;
 			StartCoroutine(RoundEnd());
 		}
 		else
@@ -273,6 +279,8 @@ public class GameManager : MonoBehaviour {
 	#region Player 2 Control
 	void Player2Turn()
 	{
+		Player2Stats = new List<int>();
+
 		Player2Stats.Add(Player2[0].pace);
 		Player2Stats.Add(Player2[0].dribbling);
 		Player2Stats.Add(Player2[0].shooting);
@@ -313,11 +321,6 @@ public class GameManager : MonoBehaviour {
 			OnStrengthClick();
 		}
 
-		for (int i = 0; i < Player2Stats.Count; i++)
-		{
-			Player2Stats.Remove(Player2Stats[i]);
-		}
-
 	}
 	#endregion
 
@@ -355,33 +358,39 @@ public class GameManager : MonoBehaviour {
 	//button interactions
 	public void OnPaceClick()
 	{
-		Comparison(Player1[0].pace, Player2[0].pace);
 		comparisonName = "PACE";
+		Comparison(Player1[0].pace, Player2[0].pace);
+		
 	}
 	public void OnDribblingClick()
 	{
-		Comparison(Player1[0].dribbling, Player2[0].dribbling);
 		comparisonName = "DRIBBLING";
+		Comparison(Player1[0].dribbling, Player2[0].dribbling);
+		
 	}
 	public void OnShootingClick()
 	{
-		Comparison(Player1[0].shooting, Player2[0].shooting);
 		comparisonName = "SHOOTING";
+		Comparison(Player1[0].shooting, Player2[0].shooting);
+		
 	}
 	public void OnDefendingClick()
 	{
-		Comparison(Player1[0].defending, Player2[0].defending);
 		comparisonName = "DEFENDING";
+		Comparison(Player1[0].defending, Player2[0].defending);
+		
 	}
 	public void OnPassingClick()
 	{
-		Comparison(Player1[0].passing, Player2[0].passing);
 		comparisonName = "PASSING";
+		Comparison(Player1[0].passing, Player2[0].passing);
+		
 	}
 	public void OnStrengthClick()
 	{
-		Comparison(Player1[0].strength, Player2[0].strength);
 		comparisonName = "STRENGTH";
+		Comparison(Player1[0].strength, Player2[0].strength);
+		
 	}
 	#endregion
 }

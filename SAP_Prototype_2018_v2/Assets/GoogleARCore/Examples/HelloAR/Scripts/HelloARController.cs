@@ -151,6 +151,8 @@ namespace GoogleARCore.Examples.HelloAR
 					readyButton.SetActive(true);
 					rotateLeftButton.SetActive(true);
 					rotateRightButton.SetActive(true);
+
+				
 				}
             }
         }

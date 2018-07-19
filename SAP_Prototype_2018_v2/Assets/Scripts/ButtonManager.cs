@@ -82,4 +82,8 @@ public class ButtonManager : MonoBehaviour {
 		home.SetActive(false);
 
 	}
+	public void TopTrumpsBackButton()
+	{
+
+	}
 }
