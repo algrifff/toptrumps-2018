@@ -9,6 +9,33 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]
 	private GameObject player1TextObject;
 
+	[Header("Player Objects")]
+	[SerializeField]
+	private GameObject player1;
+	[SerializeField]
+	private GameObject player2;
+
+	[Header("Player Model materials")]
+	[SerializeField]
+	private Material face;
+	[SerializeField]
+	private Material body;
+	[SerializeField]
+	private Material hair;
+	[SerializeField]
+	private Material shoes;
+	[SerializeField]
+	private Material uniform;
+	[SerializeField]
+	private Material hiddenPlayer;
+
+	[Header("Player2 model")]
+	[SerializeField]
+	private GameObject player2Model;
+	[SerializeField]
+	private GameObject p2CardCover;
+
+
 	[Header("Starting objects")]
 	[SerializeField]
 	private RotateController rotateController;
@@ -28,6 +55,36 @@ public class GameManager : MonoBehaviour {
 	private Text player1ScoreText;
 	[SerializeField]
 	private Text player2ScoreText;
+
+	[Header("Comparison Fields")]
+	[SerializeField]
+	private GameObject comparisonUI;
+	[SerializeField]
+	private Text comparisonStatName;
+	[SerializeField]
+	private Text comparisonP1Stat;
+	[SerializeField]
+	private Text comparisonP2Stat;
+	private string comparisonName;
+
+	[Header("Win/Lose fields")]
+	[SerializeField]
+	private GameObject winLoseObject;
+	[SerializeField]
+	private Text winLoseMainText;
+	[SerializeField]
+	private GameObject winsText;
+
+	[Header("Round fields")]
+	[SerializeField]
+	private GameObject roundUi;
+	[SerializeField]
+	private Text roundNumberText;
+	[SerializeField]
+	private Text roundInfoText;
+	private int roundNum;
+
+
 
 	[Header("Team being used")]
 	[SerializeField]
@@ -70,9 +127,9 @@ public class GameManager : MonoBehaviour {
 	
 	void Start ()
 	{
-		//readyButton.SetActive(false);
-		//buttonCanvas.SetActive(false);
-		//player1TextObject.SetActive(false);
+		readyButton.SetActive(false);
+		buttonCanvas.SetActive(false);
+		player1TextObject.SetActive(false);
 		rotateLeftButton.SetActive(false);
 		rotateRightButton.SetActive(false);
 		rotateController.enabled = true;
@@ -82,34 +139,79 @@ public class GameManager : MonoBehaviour {
 	}
 	IEnumerator RoundStart()
 	{
-		UpdateScore();
-		UpdateCards();
-		//round 1 visual cue
-
-
-
-		// do this last
-		buttonCanvas.SetActive(true);
-		return null;
-	}
-	
-
-	void UpdateCards()
-	{
 		SendCard(Player1[0]);
 		SendCard2(Player2[0]);
-		if(player1Win == false)
+		UpdateScore();
+		roundNum = roundNum + 1;
+		//player1 turn start
+		if(player1Win == true)
 		{
-			buttonCanvas.SetActive(false);
-			Player2Turn(); 
-		}
-		else 
-		{
+			roundNumberText.text = "ROUND " + roundNum;
+			roundInfoText.text = "PLAYER 1 STARTS!";
+			roundUi.SetActive(true);
+			yield return new WaitForSeconds(3);
+			player1TextObject.SetActive(true);
 			buttonCanvas.SetActive(true);
+			yield return new WaitForSeconds(1);
+			roundUi.SetActive(false);
+
 		}
-		
+		//player 2 turn start
+		else if(player1Win == false)
+		{
+			roundNumberText.text = "ROUND " + roundNum;
+			roundInfoText.text = "PLAYER 2 STARTS!";
+			roundUi.SetActive(true);
+			yield return new WaitForSeconds(2);
+			player1TextObject.SetActive(true);
+			buttonCanvas.SetActive(false);
+			yield return new WaitForSeconds(1);
+			roundUi.SetActive(false);
+
+			yield return new WaitForSeconds(4);
+
+			Player2Turn();
+		}
+
+		yield return null;
 	}
 	
+	IEnumerator RoundEnd()
+	{
+		p2CardCover.SetActive(false);
+		yield return new WaitForSeconds(2);
+		comparisonUI.SetActive(true);
+		if (player1Win == true)
+		{
+			winLoseMainText.text = "PLAYER 1";
+			winsText.SetActive(true);
+			winLoseObject.SetActive(true);
+		}
+		else if(player1Win == false)
+		{
+			winLoseMainText.text = "PLAYER 2";
+			winsText.SetActive(true);
+			winLoseObject.SetActive(true);
+			
+			
+		}
+		yield return new WaitForSeconds(4);
+		winsText.SetActive(false);
+		winLoseObject.SetActive(false);
+		comparisonUI.SetActive(false);
+		//when comparison is complete
+		//update score
+		//update cards
+		//reset player 2 so you cant see them
+		//the start rouns start
+		UpdateScore();
+
+
+		StartCoroutine(RoundStart());
+
+
+		yield return null;
+	}
 
 	void UpdateScore()
 	{
@@ -121,6 +223,10 @@ public class GameManager : MonoBehaviour {
 
 	void Comparison(int player1Comparison, int player2Comparison)
 	{
+		comparisonP1Stat.text = "" + player1Comparison;
+		comparisonP2Stat.text = "" + player2Comparison;
+		comparisonStatName.text = comparisonName;
+
 		if (player1Comparison > player2Comparison)
 		{
 			Card oldCard = Player1[0];
@@ -131,9 +237,8 @@ public class GameManager : MonoBehaviour {
 			Player2.Remove(Player2[0]);
 			player1Win = true;
 			player2Win = false;
-			UpdateCards();
 
-			UpdateScore();
+			StartCoroutine(RoundEnd());
 		}
 		else if (player2Comparison > player1Comparison)
 		{
@@ -145,9 +250,8 @@ public class GameManager : MonoBehaviour {
 			Player1.Remove(Player1[0]);
 			player1Win = false;
 			player2Win = true;
-			UpdateCards();
 
-			UpdateScore();
+			StartCoroutine(RoundEnd());			
 		}
 		else if (player1Comparison == player2Comparison)
 		{
@@ -159,9 +263,7 @@ public class GameManager : MonoBehaviour {
 			Player1.Add(oldCard1);
 			Player2.Add(oldCard2);
 
-			UpdateCards();
-
-			UpdateScore();
+			StartCoroutine(RoundEnd());
 		}
 		else
 		{
@@ -254,26 +356,32 @@ public class GameManager : MonoBehaviour {
 	public void OnPaceClick()
 	{
 		Comparison(Player1[0].pace, Player2[0].pace);
+		comparisonName = "PACE";
 	}
 	public void OnDribblingClick()
 	{
 		Comparison(Player1[0].dribbling, Player2[0].dribbling);
+		comparisonName = "DRIBBLING";
 	}
 	public void OnShootingClick()
 	{
 		Comparison(Player1[0].shooting, Player2[0].shooting);
+		comparisonName = "SHOOTING";
 	}
 	public void OnDefendingClick()
 	{
 		Comparison(Player1[0].defending, Player2[0].defending);
+		comparisonName = "DEFENDING";
 	}
 	public void OnPassingClick()
 	{
 		Comparison(Player1[0].passing, Player2[0].passing);
+		comparisonName = "PASSING";
 	}
 	public void OnStrengthClick()
 	{
 		Comparison(Player1[0].strength, Player2[0].strength);
+		comparisonName = "STRENGTH";
 	}
 	#endregion
 }
