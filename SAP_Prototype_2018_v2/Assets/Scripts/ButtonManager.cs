@@ -15,8 +15,6 @@ public class ButtonManager : MonoBehaviour {
 	private GameObject t_teamSelectMenu;
 	[SerializeField]
 	private GameObject drillsMenu;
-	[SerializeField]
-	private GameObject home;
 
 	public delegate void SceneChange(string sceneName);
 	public static event SceneChange NewScene;
@@ -29,7 +27,7 @@ public class ButtonManager : MonoBehaviour {
 		t_teamSelectMenu.SetActive(false);
 		t_teamSelectMenu.SetActive(false);
 		drillsMenu.SetActive(false);
-		home.SetActive(false);
+		
 		
 	}
 
@@ -39,20 +37,20 @@ public class ButtonManager : MonoBehaviour {
 		topTrumpsMenu.SetActive(true);
 		t_hostJoinMenu.SetActive(true);
 		t_teamSelectMenu.SetActive(false);
-		home.SetActive(true);
+		
 	}
 	public void OnDrillsClick()
 	{
 		mainMenu.SetActive(false);
 		drillsMenu.SetActive(true);
-		home.SetActive(true);
+		
 	}
 
 	public void OnHostClick()
 	{
 		t_hostJoinMenu.SetActive(false);
 		t_teamSelectMenu.SetActive(true);
-		home.SetActive(true);
+		
 	}
 
 	//top trumps team selection
@@ -71,19 +69,21 @@ public class ButtonManager : MonoBehaviour {
 	}
 
 
-	public void OnHomeClick()
+	public void OnTopTrumpsHostBackButtonClick()
 	{
 		mainMenu.SetActive(true);
-
 		topTrumpsMenu.SetActive(false);
-		t_teamSelectMenu.SetActive(false);
-		t_teamSelectMenu.SetActive(false);
-		drillsMenu.SetActive(false);
-		home.SetActive(false);
-
+		
 	}
-	public void TopTrumpsBackButton()
+	public void TopTrumpsTeamScreenBackButton()
 	{
+		t_teamSelectMenu.SetActive(false);
+		t_hostJoinMenu.SetActive(true);
+	}
+	public void OnDrillsTeamChooseBackClick()
+	{
+		mainMenu.SetActive(true);
+		drillsMenu.SetActive(false);
 
 	}
 }

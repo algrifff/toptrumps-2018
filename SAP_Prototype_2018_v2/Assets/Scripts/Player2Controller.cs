@@ -63,7 +63,7 @@ public class Player2Controller : MonoBehaviour {
 		currentCard = card;
 		//sets 3D object values
 		nameText.text = "" + card.name;
-		positionText.text = "" + card.position;
+		positionText.text = "Position: " + card.position;
 		paceIntText.text = "" + card.pace;
 		dribblingIntText.text = "" + card.dribbling;
 		shootingIntText.text = "" + card.shooting;
@@ -74,23 +74,23 @@ public class Player2Controller : MonoBehaviour {
 		if (card.position == "GK")
 		{
 			//3D text
-			paceText.text = "DIVING";
-			dribblingText.text = "HANDLING";
-			shootingText.text = "KICKING";
-			defendingText.text = "REFLEXES";
-			passingText.text = "SPEED";
-			strengthText.text = "POSITIONING";
+			paceText.text = "Diving";
+			dribblingText.text = "Handling";
+			shootingText.text = "Kicking";
+			defendingText.text = "Reflexes";
+			passingText.text = "Speed";
+			strengthText.text = "Positioning";
 		}
 
 		else
 		{
 			//3D text
-			paceText.text = "PACE";
-			dribblingText.text = "DRIBBLING";
-			shootingText.text = "SHOOTING";
-			defendingText.text = "DEFENDING";
-			passingText.text = "PASSING";
-			strengthText.text = "STRENGTH";
+			paceText.text = "Pace";
+			dribblingText.text = "Dribbling";
+			shootingText.text = "Shooting";
+			defendingText.text = "Defending";
+			passingText.text = "Passing";
+			strengthText.text = "Strength";
 
 		}
 

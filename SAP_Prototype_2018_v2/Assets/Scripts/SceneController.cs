@@ -32,6 +32,9 @@ public class SceneController : MonoBehaviour {
 
 	public void LoadScene(string sceneName)
 	{
+		//Scene currentScene = SceneManager.GetActiveScene();
+		//string c = "" +currentScene;
+		//SceneManager.UnloadSceneAsync(c);
 		SceneManager.LoadScene(sceneName);
 	}
 }

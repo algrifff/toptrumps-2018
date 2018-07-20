@@ -22,6 +22,7 @@ namespace GoogleARCore.Examples.Common
 {
     using System.Collections.Generic;
     using GoogleARCore;
+	using GoogleARCore.Examples.HelloAR;
     using UnityEngine;
 
     /// <summary>
@@ -34,16 +35,17 @@ namespace GoogleARCore.Examples.Common
         /// </summary>
         public GameObject DetectedPlanePrefab;
 
+		
         /// <summary>
         /// A list to hold new planes ARCore began tracking in the current frame. This object is used across
         /// the application to avoid per-frame allocations.
         /// </summary>
         private List<DetectedPlane> m_NewPlanes = new List<DetectedPlane>();
 
-        /// <summary>
-        /// The Unity Update method.
-        /// </summary>
-        public void Update()
+		/// <summary>
+		/// The Unity Update method.
+		/// </summary>
+		public void Update()
         {
             // Check that motion tracking is tracking.
             if (Session.Status != SessionStatus.Tracking)

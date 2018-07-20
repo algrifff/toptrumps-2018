@@ -91,7 +91,7 @@ public class CardDisplay : MonoBehaviour {
 		currentCard = card;
 		//sets 3D object values
 		nameText.text = "" + card.name;
-		positionText.text = "" + card.position;
+		positionText.text = "Position: " + card.position;
 		paceIntText.text = "" + card.pace;
 		dribblingIntText.text = "" + card.dribbling;
 		shootingIntText.text = "" + card.shooting;
@@ -110,38 +110,38 @@ public class CardDisplay : MonoBehaviour {
 		if (card.position == "GK")
 		{
 			//3D text
-			paceText.text = "DIVING";
-			dribblingText.text = "HANDLING";
-			shootingText.text = "KICKING";
-			defendingText.text = "REFLEXES";
-			passingText.text = "SPEED";
-			strengthText.text = "POSITIONING";
+			paceText.text = "Diving";
+			dribblingText.text = "Handling";
+			shootingText.text = "Kicking";
+			defendingText.text = "Reflexes";
+			passingText.text = "Speed";
+			strengthText.text = "Positioning";
 
 			//2D text
-			paceButtonText.text = "DIVING";
-			dribblingButtonText.text = "HANDLING";
-			shootingButtonText.text = "KICKING";
-			defendingButtonText.text = "REFLEXES";
-			passingButtonText.text = "SPEED";
-			strengthButtonText.text = "POSITIONING";
+			paceButtonText.text = "Diving";
+			dribblingButtonText.text = "Handling";
+			shootingButtonText.text = "Kicking";
+			defendingButtonText.text = "Reflexes";
+			passingButtonText.text = "Speed";
+			strengthButtonText.text = "Positioning";
 		}
 		else
 		{
 			//3D text
-			paceText.text = "PACE";
-			dribblingText.text = "DRIBBLING";
-			shootingText.text = "SHOOTING";
-			defendingText.text = "DEFENDING";
-			passingText.text = "PASSING";
-			strengthText.text = "STRENGTH";
+			paceText.text = "Pace";
+			dribblingText.text = "Dribbling";
+			shootingText.text = "Shooting";
+			defendingText.text = "Defending";
+			passingText.text = "Passing";
+			strengthText.text = "Strength";
 
 			//2D text
-			paceButtonText.text = "PACE";
-			dribblingButtonText.text = "DRIBBLING";
-			shootingButtonText.text = "SHOOTING";
-			defendingButtonText.text = "DEFENDING";
-			passingButtonText.text = "PASSING";
-			strengthButtonText.text = "STRENGTH";
+			paceButtonText.text = "Pace";
+			dribblingButtonText.text = "Dribbling";
+			shootingButtonText.text = "Shooting";
+			defendingButtonText.text = "Defending";
+			passingButtonText.text = "Passing";
+			strengthButtonText.text = "Strength";
 		}
 
 	}

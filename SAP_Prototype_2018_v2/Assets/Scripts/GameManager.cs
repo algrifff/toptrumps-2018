@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	#region Publics
+	#region Setables
 	[SerializeField]
 	private GameObject player1TextObject;
 
@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour {
 	private GameObject player1;
 	[SerializeField]
 	private GameObject player2;
+	[SerializeField]
+	private GameObject player1Ui;
+	[SerializeField]
+	private GameObject player2Ui;
 
 	[Header("Player Model materials")]
 	[SerializeField]
@@ -34,7 +38,6 @@ public class GameManager : MonoBehaviour {
 	private GameObject player2Model;
 	[SerializeField]
 	private GameObject p2CardCover;
-
 
 	[Header("Starting objects")]
 	[SerializeField]
@@ -74,6 +77,8 @@ public class GameManager : MonoBehaviour {
 	private Text winLoseMainText;
 	[SerializeField]
 	private GameObject winsText;
+	[SerializeField]
+	private GameObject drawObject;
 
 	[Header("Round fields")]
 	[SerializeField]
@@ -83,8 +88,6 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]
 	private Text roundInfoText;
 	private int roundNum;
-
-
 
 	[Header("Team being used")]
 	[SerializeField]
@@ -111,6 +114,8 @@ public class GameManager : MonoBehaviour {
 	private GameObject passingButton;
 	[SerializeField]
 	private GameObject strengthButton;
+	[SerializeField]
+	private GameObject waitingForPlayer2;
 	#endregion
 
 	public List<int> Player2Stats;
@@ -140,23 +145,26 @@ public class GameManager : MonoBehaviour {
 	}
 	IEnumerator RoundStart()
 	{
+		player1Ui.SetActive(false);
+		player2Ui.SetActive(false);
 		p2CardCover.SetActive(true);
 		SendCard(Player1[0]);
 		SendCard2(Player2[0]);
 		UpdateScore();
 		roundNum = roundNum + 1;
-		//player1 turn start
 
+		//player1 turn start
 		if(player1Win == true)
 		{
 			roundNumberText.text = "ROUND " + roundNum;
 			roundInfoText.text = "PLAYER 1 STARTS!";
 			roundUi.SetActive(true);
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(4);
+			roundUi.SetActive(false);
+			player1Ui.SetActive(true);
+			player2Ui.SetActive(true);
 			player1TextObject.SetActive(true);
 			buttonCanvas.SetActive(true);
-			yield return new WaitForSeconds(1);
-			roundUi.SetActive(false);
 
 		}
 		//player 2 turn start
@@ -165,12 +173,15 @@ public class GameManager : MonoBehaviour {
 			roundNumberText.text = "ROUND " + roundNum;
 			roundInfoText.text = "PLAYER 2 STARTS!";
 			roundUi.SetActive(true);
-			yield return new WaitForSeconds(2);
-			player1TextObject.SetActive(true);
-			buttonCanvas.SetActive(false);
-			yield return new WaitForSeconds(1);
-			roundUi.SetActive(false);
 			yield return new WaitForSeconds(4);
+			roundUi.SetActive(false);
+			player1TextObject.SetActive(true);
+			player1Ui.SetActive(true);
+			player2Ui.SetActive(true);
+			buttonCanvas.SetActive(false);
+			waitingForPlayer2.SetActive(true);
+			yield return new WaitForSeconds(4);
+			waitingForPlayer2.SetActive(false);
 			Player2Turn();
 		}
 		
@@ -181,9 +192,12 @@ public class GameManager : MonoBehaviour {
 	{
 		p2CardCover.SetActive(false);
 		yield return new WaitForSeconds(2);
+		player1Ui.SetActive(false);
+		player2Ui.SetActive(false);
 		comparisonUI.SetActive(true);
-
-		if(draw == false)
+		yield return new WaitForSeconds(3);
+		comparisonUI.SetActive(false);
+		if (draw == false)
 		{
 			if (player1Win == true)
 			{
@@ -198,22 +212,16 @@ public class GameManager : MonoBehaviour {
 				winLoseObject.SetActive(true);
 			}
 		}
-		else if(draw == false)
+		else if(draw == true)
 		{
-			winLoseMainText.text = "DRAW!";
-			
-			winLoseObject.SetActive(true);
+			drawObject.SetActive(true);
 		}
 		yield return new WaitForSeconds(4);
 		winsText.SetActive(false);
+		drawObject.SetActive(false);
 		winLoseObject.SetActive(false);
 		comparisonUI.SetActive(false);
 		draw = false;
-		//when comparison is complete
-		//update score
-		//update cards
-		//reset player 2 so you cant see them
-		//the start rouns start
 		UpdateScore();
 		StartCoroutine(RoundStart());
 		yield return null;

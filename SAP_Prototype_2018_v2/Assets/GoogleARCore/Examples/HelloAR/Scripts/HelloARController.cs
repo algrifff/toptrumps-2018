@@ -36,6 +36,7 @@ namespace GoogleARCore.Examples.HelloAR
     /// </summary>
     public class HelloARController : MonoBehaviour
     {
+		public bool drillAR;
         /// <summary>
         /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
         /// </summary>
@@ -81,6 +82,8 @@ namespace GoogleARCore.Examples.HelloAR
 
 		private bool canPlaceLevel = true;
 
+		public delegate void PlaneGeneration();
+		public static event PlaneGeneration PlaneDisabled;
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
@@ -126,6 +129,8 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else if(canPlaceLevel == true)
                 {
+					
+
                     // Instantiate Andy model at the hit pose.
                     var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
 
@@ -139,20 +144,31 @@ namespace GoogleARCore.Examples.HelloAR
                     // Make Andy model a child of the anchor.
                     andyObject.transform.parent = anchor.transform;
 
-					gameBoard.transform.parent = anchor.transform;
-					gameBoard.transform.localPosition = Vector3.zero;
-					gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-					gameBoard.SetActive(true);
+					if(drillAR== false)
+					{
+						gameBoard.transform.parent = anchor.transform;
+						gameBoard.transform.localPosition = Vector3.zero;
+						gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+						gameBoard.SetActive(true);
 
-					DetectedPlanePrefab.SetActive(false);
+						DetectedPlanePrefab.SetActive(false);
 
-					canPlaceLevel = false;
-					SearchingForPlaneUI.SetActive(false);
-					readyButton.SetActive(true);
-					rotateLeftButton.SetActive(true);
-					rotateRightButton.SetActive(true);
+						canPlaceLevel = false;
+						SearchingForPlaneUI.SetActive(false);
+						readyButton.SetActive(true);
+						rotateLeftButton.SetActive(true);
+						rotateRightButton.SetActive(true);
 
-				
+						PlaneDisabled();
+					}
+					if(drillAR == true)
+					{
+						gameBoard.transform.parent = anchor.transform;
+						gameBoard.transform.localPosition = Vector3.zero;
+						gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+						gameBoard.SetActive(true);
+					}
+
 				}
             }
         }

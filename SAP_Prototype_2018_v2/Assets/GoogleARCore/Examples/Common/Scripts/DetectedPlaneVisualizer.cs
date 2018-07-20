@@ -33,8 +33,8 @@ namespace GoogleARCore.Examples.Common
 
         private readonly Color[] k_PlaneColors = new Color[]
         {
-            new Color(1.0f, 1.0f, 1.0f),
-            new Color(0.956f, 0.262f, 0.211f),
+            new Color(0.9137f, 0.6588235f, 0.01960784f),
+            /*new Color(0.956f, 0.262f, 0.211f),
             new Color(0.913f, 0.117f, 0.388f),
             new Color(0.611f, 0.152f, 0.654f),
             new Color(0.403f, 0.227f, 0.717f),
@@ -47,7 +47,7 @@ namespace GoogleARCore.Examples.Common
             new Color(0.545f, 0.764f, 0.290f),
             new Color(0.803f, 0.862f, 0.223f),
             new Color(1.0f, 0.921f, 0.231f),
-            new Color(1.0f, 0.756f, 0.027f)
+            new Color(1.0f, 0.756f, 0.027f)*/
         };
 
         private DetectedPlane m_DetectedPlane;
@@ -65,6 +65,8 @@ namespace GoogleARCore.Examples.Common
 
         private MeshRenderer m_MeshRenderer;
 
+		private bool disablePlane;
+
         /// <summary>
         /// The Unity Awake() method.
         /// </summary>
@@ -74,10 +76,19 @@ namespace GoogleARCore.Examples.Common
             m_MeshRenderer = GetComponent<UnityEngine.MeshRenderer>();
         }
 
-        /// <summary>
-        /// The Unity Update() method.
-        /// </summary>
-        public void Update()
+		private void OnEnable()
+		{
+			HelloAR.HelloARController.PlaneDisabled += PlaneDisable;
+		}
+		private void OnDisable()
+		{
+			HelloAR.HelloARController.PlaneDisabled -= PlaneDisable;
+		}
+
+		/// <summary>
+		/// The Unity Update() method.
+		/// </summary>
+		public void Update()
         {
             if (m_DetectedPlane == null)
             {
@@ -93,8 +104,10 @@ namespace GoogleARCore.Examples.Common
                  m_MeshRenderer.enabled = false;
                  return;
             }
-
-            m_MeshRenderer.enabled = true;
+			if (disablePlane == false)
+			{
+				m_MeshRenderer.enabled = true;
+			}
 
             _UpdateMeshIfNeeded();
         }
@@ -111,6 +124,12 @@ namespace GoogleARCore.Examples.Common
 
             Update();
         }
+
+		void PlaneDisable()
+		{
+			disablePlane = true;
+			m_MeshRenderer.enabled = false;
+		}
 
         /// <summary>
         /// Update mesh with a list of Vector3 and plane's center position.
