@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Joel_Latibeaudiere
   m_EditorClassIdentifier: 
   name: Joel_Latibeaudiere
-  position: CB
+  position: Centre-Back
   model: {fileID: 1899991489119868, guid: e4a5a23c2bf391b4aad39cdf1c21f42d, type: 2}
   pace: 55
   dribbling: 35

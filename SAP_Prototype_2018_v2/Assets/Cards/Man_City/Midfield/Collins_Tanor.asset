@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Collins_Tanor
   m_EditorClassIdentifier: 
   name: Collins Tanor
-  position: CM
+  position: Centre-Midfield
   model: {fileID: 1899991489119868, guid: e4a5a23c2bf391b4aad39cdf1c21f42d, type: 2}
   pace: 59
   dribbling: 48

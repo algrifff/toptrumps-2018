@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Ilkay_Gundogan
   m_EditorClassIdentifier: 
   name: Ilkay Gundogan
-  position: CM
+  position: Centre-Midfield
   model: {fileID: 1899991489119868, guid: e4a5a23c2bf391b4aad39cdf1c21f42d, type: 2}
   pace: 71
   dribbling: 87

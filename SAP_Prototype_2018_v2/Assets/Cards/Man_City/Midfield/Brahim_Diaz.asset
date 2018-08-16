@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Brahim_Diaz
   m_EditorClassIdentifier: 
   name: Brahim Diaz
-  position: CAM
+  position: Centre-Attacking-Midfield
   model: {fileID: 1899991489119868, guid: e4a5a23c2bf391b4aad39cdf1c21f42d, type: 2}
   pace: 76
   dribbling: 72

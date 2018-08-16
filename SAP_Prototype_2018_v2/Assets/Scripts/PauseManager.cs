@@ -45,4 +45,8 @@ public class PauseManager : MonoBehaviour {
 		//load scene 
 		MainMenuClicked("MainMenu");
 	}
+	public void OnPlayAgainClicked()
+	{
+		MainMenuClicked("TopTrumps");
+	}
 }

@@ -63,6 +63,8 @@ namespace GoogleARCore.Examples.HelloAR
 		private GameObject rotateRightButton;
 		[SerializeField]
 		private GameObject rotateLeftButton;
+		[SerializeField]
+		private GameObject placeObjectUi;
 
 		/// <summary>
 		/// The rotation in degrees need to apply to model when the Andy model is placed.
@@ -81,9 +83,12 @@ namespace GoogleARCore.Examples.HelloAR
         private bool m_IsQuitting = false;
 
 		private bool canPlaceLevel = true;
+		
 
 		public delegate void PlaneGeneration();
 		public static event PlaneGeneration PlaneDisabled;
+		public delegate void DrillStart();
+		public static event DrillStart OnDrillStart;
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
@@ -103,7 +108,15 @@ namespace GoogleARCore.Examples.HelloAR
                 }
             }
 
-            SearchingForPlaneUI.SetActive(showSearchingUI);
+			SearchingForPlaneUI.SetActive(showSearchingUI);
+			if(showSearchingUI == false && canPlaceLevel == true)
+			{
+				placeObjectUi.SetActive(true);
+			}
+			else
+			{
+				placeObjectUi.SetActive(false);
+			}
 
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
@@ -129,10 +142,10 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else if(canPlaceLevel == true)
                 {
-					
 
-                    // Instantiate Andy model at the hit pose.
-                    var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
+					
+					// Instantiate Andy model at the hit pose.
+					var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
                     andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
@@ -150,7 +163,7 @@ namespace GoogleARCore.Examples.HelloAR
 						gameBoard.transform.localPosition = Vector3.zero;
 						gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 						gameBoard.SetActive(true);
-
+						placeObjectUi.SetActive(false);
 						DetectedPlanePrefab.SetActive(false);
 
 						canPlaceLevel = false;
@@ -167,6 +180,9 @@ namespace GoogleARCore.Examples.HelloAR
 						gameBoard.transform.localPosition = Vector3.zero;
 						gameBoard.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 						gameBoard.SetActive(true);
+						canPlaceLevel = false;
+						placeObjectUi.SetActive(false);
+						OnDrillStart();
 					}
 
 				}

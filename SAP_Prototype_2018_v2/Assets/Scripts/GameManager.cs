@@ -49,6 +49,18 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]
 	private GameObject rotateLeftButton;
 
+	[Header("Animators")]
+	[SerializeField]
+	private Animator player1Animator;
+	[SerializeField]
+	private Animator player2Animator;
+
+	[Header("Player effects")]
+	[SerializeField]
+	private GameObject player1Confetti;
+	[SerializeField]
+	private GameObject player2Confetti;
+
 	[Header("Score Fields")]
 	[SerializeField]
 	private int player1Score;
@@ -116,6 +128,14 @@ public class GameManager : MonoBehaviour {
 	private GameObject strengthButton;
 	[SerializeField]
 	private GameObject waitingForPlayer2;
+
+	[Header("EndGame")]
+	[SerializeField]
+	private Text endgameText;
+	[SerializeField]
+	private GameObject endgameObject;
+	[SerializeField]
+	private GameObject pauseButton;
 	#endregion
 
 	public List<int> Player2Stats;
@@ -138,9 +158,26 @@ public class GameManager : MonoBehaviour {
 		player1TextObject.SetActive(false);
 		rotateLeftButton.SetActive(false);
 		rotateRightButton.SetActive(false);
+		player1Confetti.SetActive(false);
+		player2Confetti.SetActive(false);
 		rotateController.enabled = true;
 		player1Win = true;
 		player2Win = false;
+		
+	}
+	void Player1Win()
+	{
+		endgameText.text = "Congratulations!";
+		endgameObject.SetActive(true);
+		pauseButton.SetActive(false);
+		buttonCanvas.SetActive(false);
+	}
+	void Player2Win()
+	{
+		endgameText.text = "Try Again!";
+		endgameObject.SetActive(true);
+		pauseButton.SetActive(false);
+		buttonCanvas.SetActive(false);
 		
 	}
 	IEnumerator RoundStart()
@@ -201,27 +238,47 @@ public class GameManager : MonoBehaviour {
 		{
 			if (player1Win == true)
 			{
+				player1Confetti.SetActive(true);
+				player1Animator.SetBool("Win", true);
+				player2Animator.SetBool("Lose", true);
 				winLoseMainText.text = "PLAYER 1";
 				winsText.SetActive(true);
 				winLoseObject.SetActive(true);
+				
 			}
 			else if (player1Win == false)
 			{
+				player2Confetti.SetActive(true);
+				player1Animator.SetBool("Lose", true);
+				player2Animator.SetBool("Win", true);
 				winLoseMainText.text = "PLAYER 2";
 				winsText.SetActive(true);
 				winLoseObject.SetActive(true);
+				
 			}
 		}
 		else if(draw == true)
 		{
 			drawObject.SetActive(true);
 		}
-		yield return new WaitForSeconds(4);
+		yield return new WaitForSeconds(6);
+
+		player1Confetti.SetActive(false);
+		player2Confetti.SetActive(false);
+
+		player1Animator.SetBool("Win", false);
+		player1Animator.SetBool("Lose", false);
+
+		player2Animator.SetBool("Win", false);
+		player2Animator.SetBool("Lose", false);
+
 		winsText.SetActive(false);
 		drawObject.SetActive(false);
 		winLoseObject.SetActive(false);
 		comparisonUI.SetActive(false);
+
 		draw = false;
+
 		UpdateScore();
 		StartCoroutine(RoundStart());
 		yield return null;

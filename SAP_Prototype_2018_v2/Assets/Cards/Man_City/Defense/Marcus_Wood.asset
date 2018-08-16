@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Marcus_Wood
   m_EditorClassIdentifier: 
   name: Marcus Wood
-  position: LB
+  position: Left-Back
   model: {fileID: 1899991489119868, guid: e4a5a23c2bf391b4aad39cdf1c21f42d, type: 2}
   pace: 61
   dribbling: 53
